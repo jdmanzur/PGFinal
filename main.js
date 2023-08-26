@@ -7,6 +7,9 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
 const scene = new THREE.Scene();
+//setando a cor do fundo da cena para uma cor escura
+scene.background = new THREE.Color('#11002D');
+
 
 const camera1 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1 , 1000); //FOV, Aspect Radio, dist mínima para ver e máxima
 
@@ -22,70 +25,35 @@ camera1.position.setZ(30);
 renderer.render( scene , camera1 );
 
 
-const geometry = new THREE.TorusGeometry(10,3,16,100)
+const geometry = new THREE.TorusGeometry(10, 0.15, 80, 100, Math.PI * 3)
 const material = new THREE.MeshStandardMaterial({color:"yellow",})
 
-const customMaterial = new THREE.RawShaderMaterial({
-  
-  vertexShader: `
-    uniform mat4 projectionMatrix;
-    uniform mat4 viewMatrix;
-    uniform mat4 modelMatrix;
-
-    attribute vec3 position;
-
-    void main(){
-      gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
-    }
-  `,
-
-  fragmentShader: /*glsl*/`
-    //void main(){
-      //gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-    //}
-
-    void main() {
-        //gl_FragColor = texture2D(texture1, vUv); // Displays Nothing
-        gl_FragColor = vec4(0.5, 0.2, 1.0, 1.0); // Works; Displays Flat Color
-    }
-
-  `,
-  wireframe: true,
-
-
-})
-
-
-const torus = new THREE.Mesh(geometry, customMaterial);
-
+const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus)
-
-
-
-
-
-
-
-
 
 
 
 const ambient = new THREE.AmbientLight("white")
 scene.add(ambient)
 
-let light = new THREE.DirectionalLight("yellow", 20);
+let light = new THREE.DirectionalLight("white", 20);
 scene.add(light); 
 
-const gridHelper = new THREE.GridHelper(200,50)
-scene.add(gridHelper)
+//[!] Descomentar para adicionar a grid à cena
+//const gridHelper = new THREE.GridHelper(200,50)
+//scene.add(gridHelper)
 
 
 const controls = new OrbitControls(camera1, renderer.domElement);
 
 function addStar(){
-  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-  const material = new THREE.MeshStandardMaterial({color:"white"})
+  const predefinedColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff];
+  const randomColor = predefinedColors[Math.floor(Math.random() * predefinedColors.length)];
+
+  const geometry = new THREE.SphereGeometry(0.125, 24, 24);
+
+  const material = new THREE.MeshStandardMaterial({color:randomColor})
   const star = new THREE.Mesh(geometry, material)
 
   const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
@@ -95,11 +63,22 @@ function addStar(){
 
 }
 
-//Array(500).fill().forEach(addStar)
+Array(500).fill().forEach(addStar)
 
 
-const spaceTexture = new THREE.TextureLoader().load("images/espaco.jpg")
-scene.background = spaceTexture
+
+
+const planetMaterial =  new THREE.MeshPhongMaterial({
+  color: 0xF66120,
+  emissive: 0xF66120,
+  specular: 0xFFED22,
+  shininess: 10,
+  transparent: 1,
+  opacity: 0.5,
+  wireframe: true,
+
+});
+
 
 
 let model;
@@ -107,7 +86,27 @@ const loader = new GLTFLoader();
 loader.load('models/cat/scene.gltf',
   function (gltf) {
     model = gltf.scene;
-    scene.add(model)
+
+  
+    
+    model.traverse((node) => {
+      if (node.isMesh) {
+        // Assuming each mesh has a material
+        node.material = material;
+        node.material.needsUpdate = true;
+      }
+    });
+
+
+
+  const sun = new THREE.Mesh(new THREE.IcosahedronGeometry(7, 1), planetMaterial);
+  sun.position.copy(model.position);
+  const offset = new THREE.Vector3(-1, 1, 1); 
+  sun.position.add(offset);
+  
+  scene.add(sun);
+
+  scene.add(model)
   },
   undefined,
   function (error) {
@@ -120,12 +119,53 @@ document.getElementById("y-rotation").value = 1
 
 
 
+
+
+//const geometry2 = new THREE.SphereGeometry(2, 10, 6)
+//const material2 = new THREE.MeshStandardMaterial({color:"blue",})
+const colorTransitionShader = `
+  precision highp float;
+  varying vec2 vUv;
+  uniform float transition;
+
+  void main() {
+    vec3 color = mix(vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), transition);
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
+const customMaterial = new THREE.RawShaderMaterial({
+  vertexShader: `
+    precision highp float;
+    attribute vec3 position;
+    attribute vec2 uv; // Add this line
+    varying vec2 vUv;
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: colorTransitionShader,
+  uniforms: {
+    transition: { value: 0.0 }
+  }
+});
+
+const geometry2 = new THREE.SphereGeometry(1, 32, 32);
+const esfera = new THREE.Mesh(geometry2, customMaterial);
+//scene.add(mesh);
+
+scene.add(esfera)
+
+
 //model.traverse( ( object ) => {
 //  if ( object.isMesh ) object.material = customMaterial;
 //} );
 
 //scene.add(model);
-
+const radius = 15; // Adjust the radius as needed
 
 function animate() {
   requestAnimationFrame(animate);
@@ -137,6 +177,16 @@ function animate() {
   torus.rotation.x += Xspeed
   torus.rotation.y += Yspeed
   torus.rotation.z += 0
+
+
+  const angle = (Xspeed/10) * Date.now(); // Use time for smooth rotation
+  const x = Math.cos(angle) * radius;
+  const y = Math.sin(angle) * radius;
+
+  esfera.position.set(x, y, 0);
+  esfera.rotation.y += Yspeed;
+  
+  customMaterial.uniforms.transition.value = (Math.sin(performance.now() * 0.001) + 1.0) * 0.5; // Smoothly transition between 0 and 1
 
   controls.update()
 
