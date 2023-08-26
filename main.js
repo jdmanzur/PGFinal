@@ -1,7 +1,9 @@
 import './style.css'
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
-console.log("oi")
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+//console.log("oi")
 
 const scene = new THREE.Scene();
 
@@ -27,17 +29,13 @@ const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus)
 
-const pointLight = new THREE.PointLight(0xffffff)
 
-pointLight.position.set(2,2,2)
 
-scene.add(pointLight)
-
-const ambient = new THREE.AmbientLight("#ffffff")
+const ambient = new THREE.AmbientLight("white")
 scene.add(ambient)
 
-const lightHelper = new THREE.PointLightHelper(pointLight)
-scene.add(lightHelper)
+let light = new THREE.DirectionalLight("yellow", 20);
+scene.add(light); 
 
 const gridHelper = new THREE.GridHelper(200,50)
 scene.add(gridHelper)
@@ -57,11 +55,26 @@ function addStar(){
 
 }
 
-Array(500).fill().forEach(addStar)
+//Array(500).fill().forEach(addStar)
 
 
 const spaceTexture = new THREE.TextureLoader().load("images/espaco.jpg")
 scene.background = spaceTexture
+
+
+let model;
+const loader = new GLTFLoader();
+loader.load('models/cat/scene.gltf',
+  function (gltf) {
+    model = gltf.scene;
+    scene.add(model);
+
+  },
+  undefined,
+  function (error) {
+    console.error(error);
+  }
+);
 
 
 

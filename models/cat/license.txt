@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cat
+* source:	https://sketchfab.com/3d-models/cat-ba98210536b049bda7cc74a3da01e1dc
+* author:	pondowolimo (https://sketchfab.com/pondowolimo)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cat" (https://sketchfab.com/3d-models/cat-ba98210536b049bda7cc74a3da01e1dc) by pondowolimo (https://sketchfab.com/pondowolimo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
