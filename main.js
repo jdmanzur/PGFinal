@@ -115,6 +115,9 @@ loader.load('models/cat/scene.gltf',
   }
 );
 
+document.getElementById("x-rotation").value = 1
+document.getElementById("y-rotation").value = 1
+
 
 
 //model.traverse( ( object ) => {
@@ -126,10 +129,14 @@ loader.load('models/cat/scene.gltf',
 
 function animate() {
   requestAnimationFrame(animate);
+  
+  var Xspeed=parseFloat(document.getElementById("x-rotation").value) / 100
+  var Yspeed=parseFloat(document.getElementById("y-rotation").value) / 100
+  //var Zspeed=parseFloat(document.getElementById("z-rotation").value) / 100
 
-  torus.rotation.x += 0.01
-  torus.rotation.y += 0.005
-  torus.rotation.z += 0.01
+  torus.rotation.x += Xspeed
+  torus.rotation.y += Yspeed
+  torus.rotation.z += 0
 
   controls.update()
 
