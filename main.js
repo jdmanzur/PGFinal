@@ -160,6 +160,13 @@ const esfera = new THREE.Mesh(geometry2, customMaterial);
 scene.add(esfera)
 
 
+const ringGeometry = new THREE.RingGeometry( 20, 25, 7, 1, 0, Math.PI * 2 );
+const ringmaterial = new THREE.MeshBasicMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
+const ring = new THREE.Mesh(ringGeometry, ringmaterial);
+
+scene.add(ring)
+
+
 //model.traverse( ( object ) => {
 //  if ( object.isMesh ) object.material = customMaterial;
 //} );
@@ -185,6 +192,10 @@ function animate() {
 
   esfera.position.set(x, y, 0);
   esfera.rotation.y += Yspeed;
+
+  ring.rotation.x -= Xspeed/2
+  ring.rotation.y -= Yspeed/2
+  ring.rotation.z = 0
   
   customMaterial.uniforms.transition.value = (Math.sin(performance.now() * 0.001) + 1.0) * 0.5; // Smoothly transition between 0 and 1
 

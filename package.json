@@ -13,5 +13,17 @@
   },
   "dependencies": {
     "three": "^0.155.0"
-  }
+  },
+  "description": "",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdmanzur/PGFinal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdmanzur/PGFinal/issues"
+  },
+  "homepage": "https://github.com/jdmanzur/PGFinal#readme"
 }
