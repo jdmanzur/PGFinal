@@ -13,6 +13,12 @@ scene.background = new THREE.Color('#11002D');
 
 const camera1 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1 , 1000); //FOV, Aspect Radio, dist mínima para ver e máxima
 
+const camera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1 , 1000);
+
+var cameras=[camera1, camera2];
+var selectCamera=0;
+
+
 const renderer = new THREE.WebGLRenderer({
   canvas : document.querySelector('#bg'),
 })
@@ -21,8 +27,9 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 camera1.position.setZ(30);
+camera2.position.setZ(30);
 
-renderer.render( scene , camera1 );
+
 
 
 const geometry = new THREE.TorusGeometry(10, 0.15, 80, 100, Math.PI * 3)
@@ -45,7 +52,6 @@ scene.add(light);
 //scene.add(gridHelper)
 
 
-const controls = new OrbitControls(camera1, renderer.domElement);
 
 function addStar(){
   const predefinedColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff];
@@ -182,10 +188,21 @@ scene.add(ring)
 //} );
 
 //scene.add(model);
-const radius = 15; // Adjust the radius as needed
+const radius = 15;
+var cameraAngle = 0;
+
+
+const controls = new OrbitControls(camera1, renderer.domElement);
+
 
 function animate() {
   requestAnimationFrame(animate);
+
+  console.log(selectCamera)
+  renderer.render( scene , cameras[selectCamera] );
+  renderer.setCamera  = cameras[selectCamera];
+
+
   
   var Xspeed=parseFloat(document.getElementById("x-rotation").value) / 100
   var Yspeed=parseFloat(document.getElementById("y-rotation").value) / 100
@@ -203,6 +220,7 @@ function animate() {
   esfera.position.set(x, y, 0);
   esfera.rotation.y += Yspeed;
 
+
   ring.rotation.x -= Xspeed
  // ring.rotation.y -= Yspeed/2
   ring.rotation.z = 0
@@ -211,9 +229,29 @@ function animate() {
 
   controls.update()
 
-  renderer.render(scene, camera1);
+  if(selectCamera == 1)
+  {
+    camera2.position.x = radius * Math.cos( cameraAngle );  
+    camera2.position.z = radius * Math.sin( cameraAngle );
+    cameraAngle += 0.003;
+
+    camera2.lookAt(model.position)
+  }
+
+
+  //renderer.render(scene, camera1);
 }
 
+
+function changeCamera()
+{
+  selectCamera = (selectCamera + 1) % 2;
+
+}
+
+
+var button = document.getElementById("cameraButton");
+button.onclick = changeCamera;
 
 
 animate()
