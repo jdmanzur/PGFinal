@@ -67,7 +67,6 @@ Array(500).fill().forEach(addStar)
 
 
 
-
 const planetMaterial =  new THREE.MeshPhongMaterial({
   color: 0xF66120,
   emissive: 0xF66120,
@@ -160,8 +159,19 @@ const esfera = new THREE.Mesh(geometry2, customMaterial);
 scene.add(esfera)
 
 
-const ringGeometry = new THREE.RingGeometry( 20, 25, 7, 1, 0, Math.PI * 2 );
-const ringmaterial = new THREE.MeshBasicMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
+const ringGeometry = new THREE.RingGeometry( 15, 17, 4, 1, 0, Math.PI * 2 );
+
+const ringmaterial =  new THREE.MeshPhongMaterial({
+  color: 0xF66120,
+  emissive: 0xF66120,
+  specular: 0xFFED22,
+  shininess: 10,
+  transparent: 1,
+  opacity: 0.5,
+  wireframe: true,
+
+});
+
 const ring = new THREE.Mesh(ringGeometry, ringmaterial);
 
 scene.add(ring)
@@ -181,7 +191,7 @@ function animate() {
   var Yspeed=parseFloat(document.getElementById("y-rotation").value) / 100
   //var Zspeed=parseFloat(document.getElementById("z-rotation").value) / 100
 
-  torus.rotation.x += Xspeed
+//  torus.rotation.x += Xspeed
   torus.rotation.y += Yspeed
   torus.rotation.z += 0
 
@@ -193,8 +203,8 @@ function animate() {
   esfera.position.set(x, y, 0);
   esfera.rotation.y += Yspeed;
 
-  ring.rotation.x -= Xspeed/2
-  ring.rotation.y -= Yspeed/2
+  ring.rotation.x -= Xspeed
+ // ring.rotation.y -= Yspeed/2
   ring.rotation.z = 0
   
   customMaterial.uniforms.transition.value = (Math.sin(performance.now() * 0.001) + 1.0) * 0.5; // Smoothly transition between 0 and 1
