@@ -2,10 +2,10 @@
 
 ## Membros do Grupo
 
-Bruno Frítoli Carrazza 770993
-Gustavo de Jesus Rodrigues Silva 771021
-Jade Manzur 771025
-Thiago Domingues da Silva 802276
+- Bruno Frítoli Carrazza 770993
+- Gustavo de Jesus Rodrigues Silva 771021
+- Jade Manzur 771025
+- Thiago Domingues da Silva 802276
 
 
 
@@ -16,21 +16,22 @@ A ideia foi montar uma visão surrealista do espaço sideral com vários element
 
 ### Especificações
 
-- Visualização de pelo menos um objeto 3D por membro do grupo, redimensionando e posicionando cada objeto individualmente no ambiente virtual;
+**Visualização de pelo menos um objeto 3D por membro do grupo, redimensionando e posicionando cada objeto individualmente no ambiente virtual**
 
 Existem os objetos:
 
-Gato
-Torus
-Planeta
-Quadrado
-Estrelas
+- Gato
+- Torus
+- Planeta
+- Icosaedro
+- Estrelas
+- Entre outros...
 
 Somos 4 membros então batemos a meta
 
 **Utilização de um shader próprio em um dos objetos (RawShaderMaterial)**
 
-É usado um shader de transição de cor 
+É usado um shader de transição de cor no planeta
 
 **Definição de pelo menos duas câmeras**
 
