@@ -11,7 +11,7 @@ Thiago Domingues da Silva 802276
 
 ### Objetivo:
 
-A ideia foi montar uma visão surrealista do espaço sideral com vários elementos únicos que quando colocados juntos criam uma vista agradável e única.
+A ideia foi montar uma visão surrealista do espaço sideral com vários elementos únicos que quando colocados juntos criam uma vista agradável e divertida.
 
 
 ### Especificações
