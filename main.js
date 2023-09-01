@@ -130,6 +130,21 @@ loader.load('models/cat/scene.gltf',
   }
 );
 
+let tankModel;
+let tankAngle = Math.PI;
+loader.load('models/tanque.gltf',
+  function (gltf) {
+    tankModel = gltf.scene;
+    tankModel.scale.x = tankModel.scale.y = tankModel.scale.z = 0.25
+    tankModel.position.x += 10
+    scene.add(tankModel);
+  },
+  undefined,
+  function (error) {
+    console.error(error);
+  }
+);
+
 //Setando valores padrões para os sliders de rotação na tela principal
 document.getElementById("x-rotation").value = 1
 document.getElementById("y-rotation").value = 1
@@ -229,6 +244,10 @@ function animate() {
   torus.rotation.y += Yspeed
   torus.rotation.z += 0
 
+  tankModel.position.x = Math.cos(tankAngle) * 10
+  tankModel.position.z = Math.sin(tankAngle) * 10
+  tankModel.rotation.y = -tankAngle
+  tankAngle += Math.PI / 120
 
   //Fazendo o planeta envolta do gato orbitar
   const angle = (Xspeed/10) * Date.now(); // Use time for smooth rotation
