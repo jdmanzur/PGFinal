@@ -68,12 +68,15 @@ isso vai abrir uma instância local do app rodando em http://localhost:5173/
 Utilizamos como referência para o projeto os tutoriais a seguir.
 
 Explica brevemente como utilizar shaders no three.js, dando uma visão geral do que são e como funcionam
-[Three.js Shaders in 2 Minutes](https://www.youtube.com/watch?v=bC4xJzbKNd0&ab_channel=ChrisCourses)
+
+- [Three.js Shaders in 2 Minutes](https://www.youtube.com/watch?v=bC4xJzbKNd0&ab_channel=ChrisCourses)
 
 Os vídeos a seguir oferecem uma explicação mais detalhada sobre shaders no three.js.
-[Three.js Tutorial on Shaders (beginners)](https://www.youtube.com/watch?v=C8Cuwq1eqDw&ab_channel=SimonDev)
-[Modern ThreeJS Shaders with GLSL Vite plugin](https://www.youtube.com/watch?v=VF2nJxoIA6c&t=3099s&ab_channel=AlvaroDevLabs)
+
+- [Three.js Tutorial on Shaders (beginners)](https://www.youtube.com/watch?v=C8Cuwq1eqDw&ab_channel=SimonDev)
+- [Modern ThreeJS Shaders with GLSL Vite plugin](https://www.youtube.com/watch?v=VF2nJxoIA6c&t=3099s&ab_channel=AlvaroDevLabs)
 
 Este vídeo é um tutorial compreensivo para o three.js e como gerar uma cena básica. Seguimos este tutorial para montar a estrutura do nosso projeto e aproveitamos a implementação de uma função para gerar as estrelas que estão na cena, modificando-a para atribuir cores às esferas geradas.
-[Build a Mindblowing 3D Portfolio Website](https://www.youtube.com/watch?v=Q7AOvWpIVHU&ab_channel=Fireship)
+
+- [Build a Mindblowing 3D Portfolio Website](https://www.youtube.com/watch?v=Q7AOvWpIVHU&ab_channel=Fireship)
 
